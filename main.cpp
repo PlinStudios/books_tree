@@ -4,10 +4,11 @@ int main() {
 
     TreeXml t("test","book");
 
-    int i;
-    cin >> i;
+    //int i;
+    //cin >> i;
     
-    t.imprimirLibro(i);
+    //t.imprimirLibro(i);
+    t.imprimirTodo();
     
     return 0;
 }

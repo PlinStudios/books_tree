@@ -35,7 +35,7 @@ public:
 
 class TreeXml {
 private:
-    vector<string>book_atributes={"id","title","isbn","publication_year","description","average_rating","num_pages","similar_books"};
+    vector<string>book_atributes={"id","title","isbn","publication_year","language_code","description","average_rating","num_pages","similar_books"};
     vector<string>similarbooks_atributes={"book","title","isbn","publication_year"};
 
     bool esAtributoValido(const string& tag,vector<string>atris);
