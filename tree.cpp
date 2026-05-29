@@ -1,5 +1,31 @@
 #include "tree.h"
 
+//lista los libros que son mas antiguos a sus libros similares
+void TreeXml::precursores(){
+    //accede a los libros
+    for(Nodo *libro : raiz.hijos){
+        bool es_precursor=true;
+        //obtiene año del libro
+        int publication_year = atoi((*libro)["publication_year"].valor.c_str());
+
+        //itera sobre los libros similares
+        for(Nodo *libro : (*libro)["similar_books"].hijos){
+            //obtiene año del libro similar
+            int sim_publication_year = atoi((*libro)["publication_year"].valor.c_str());
+
+            //compara
+            if (sim_publication_year<=publication_year){
+                es_precursor=false;
+                break;
+            }
+        }
+
+        //lista los que si son precursores
+        if (es_precursor)
+            cout << (*libro)["id"].valor << endl;
+    }
+}
+
 void TreeXml::imprimir_subtree(Nodo *start, string prefix){
     cout << prefix << start->tag << " : " << start->valor << endl;
     for(auto hijo : start->hijos){
@@ -13,6 +39,7 @@ void TreeXml::imprimirTodo(){
 void TreeXml::imprimirLibro(size_t index){
     imprimir_subtree(raiz.hijos[index]);
 }
+
 
 bool TreeXml::esAtributoValido(const string& tag,vector<string>atris) {
         for (const auto& a : atris)

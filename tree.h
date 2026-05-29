@@ -54,4 +54,7 @@ public:
     void imprimirTodo();
     //muestra la jerarquia del libro dado por el indice
     void imprimirLibro(size_t index);
+
+    //lista los libros que son mas antiguos a sus libros similares
+    void precursores();
 };
