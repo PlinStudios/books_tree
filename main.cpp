@@ -8,13 +8,47 @@ int main(int argc, char *argv[]) {
 
     TreeXml t("books_xml","book",count);
     
-    //t.imprimirTodo();
+    while (true){
 
-    t.borrar_ratings(4.5);
-    cout << endl << "Ratings borrados" << endl << endl;
+        int opcion;
+        cout << endl << "seleccione consulta" << endl;
+        cout << "1 - listar ids" << endl;
+        cout << "2 - listar id precursores" << endl;
+        cout << "3 - borrar libros con bajo rating" << endl;
+        cout << "4 - imprimir TODO" <<endl;
+        cout << "5 - salir" << endl;
+        cin >> opcion;
 
-    //t.imprimirTodo();
-    t.precursores();
-    
+        //ejecuta las peticiones
+        switch (opcion)
+        {
+        case 1: //1 - listar ids
+            //
+            break;
+        case 2: //2 - listar id precursores
+            t.precursores();
+            break;
+        case 3: //3 - borrar libros con bajo rating
+            float r;
+            cout << "rating a borrar: ";
+            cin >> r;
+            t.borrar_ratings(r);
+            break;
+        case 4: //4 - imprimir TODO
+            t.imprimirTodo();
+            break;
+        case 5: //5 - salir
+            char s;
+            cout << "esta seguro? (Y/n): ";
+            cin >> s;
+            if (s=='Y') return 0;
+            break;
+        default:
+            break;
+        }
+        
+
+    }
+
     return 0;
 }
