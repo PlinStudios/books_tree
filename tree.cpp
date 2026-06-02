@@ -6,12 +6,12 @@ void TreeXml::precursores(){
     for(Nodo *libro : raiz.hijos){
         bool es_precursor=true;
         //obtiene año del libro
-        int publication_year = atoi((*libro)["publication_year"].valor.c_str());
+        int publication_year = stoi((*libro)["publication_year"].valor.c_str());
 
         //itera sobre los libros similares
-        for(Nodo *libro : (*libro)["similar_books"].hijos){
+        for(Nodo *sim_libro : (*libro)["similar_books"].hijos){
             //obtiene año del libro similar
-            int sim_publication_year = atoi((*libro)["publication_year"].valor.c_str());
+            int sim_publication_year = stoi((*sim_libro)["publication_year"].valor.c_str());
 
             //compara
             if (sim_publication_year<=publication_year){
@@ -24,6 +24,27 @@ void TreeXml::precursores(){
         if (es_precursor)
             cout << (*libro)["id"].valor << endl;
     }
+}
+
+//elimina todos los libros con rating promedio menor o igual a r
+void TreeXml::borrar_ratings(double r){
+    //accede a los libros
+    auto it = raiz.hijos.begin();
+    while (it != raiz.hijos.end()) {
+        //obtiene su rating
+        double rating = stof((**it)["average_rating"].valor.c_str());
+
+        //elimina si rating es menor o igual
+        if (rating <= r){
+            Nodo* borrar = *it;
+            //remueve de la lista del padre
+            it = raiz.hijos.erase(it);
+            //llama destructor
+            delete borrar;
+        }else 
+            ++it;
+    }
+
 }
 
 void TreeXml::imprimir_subtree(Nodo *start, string prefix){
@@ -41,13 +62,13 @@ void TreeXml::imprimirLibro(size_t index){
 }
 
 
-bool TreeXml::esAtributoValido(const string& tag,vector<string>atris) {
+bool TreeXml::esAtributoValido(const string& tag, const vector<string>& atris) {
         for (const auto& a : atris)
             if (a == tag) return true;
         return false;
     }
 
-void TreeXml::procesarHasta(string palabra, ifstream* archivo){
+void TreeXml::procesarHasta(const string& palabra, ifstream* archivo){
     string auxw="";
     char c;
 

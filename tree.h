@@ -21,14 +21,20 @@ public:
         hijos.push_back(v);
     }
 
-    Nodo operator[](int index){
+    Nodo &operator[](int index){
         return *hijos[index];
     }
-    Nodo operator[](string tag){
+    Nodo &operator[](string tag){
         for (Nodo *hijo : hijos)
             if (hijo->tag == tag)
                 return *hijo;
-        return *this;
+        throw runtime_error("tag no encontrado");
+    }
+
+    //destructor
+    ~Nodo(){
+        for (Nodo *hijo : hijos)
+            delete hijo;
     }
 };
 
@@ -38,9 +44,9 @@ private:
     vector<string>book_atributes={"id","title","isbn","publication_year","language_code","description","average_rating","num_pages","similar_books"};
     vector<string>similarbooks_atributes={"book","title","isbn","publication_year"};
 
-    bool esAtributoValido(const string& tag,vector<string>atris);
+    bool esAtributoValido(const string& tag, const vector<string>& atris);
 
-    void procesarHasta(string palabra, ifstream* archivo);
+    void procesarHasta(const string& palabra, ifstream* archivo);
 
     //imprime los valores de un subarbol
     void imprimir_subtree(Nodo *start, string prefix = "");
@@ -57,4 +63,7 @@ public:
 
     //lista los libros que son mas antiguos a sus libros similares
     void precursores();
+
+    //elimina todos los libros con rating promedio menor o igual a r
+    void borrar_ratings(double r);
 };
