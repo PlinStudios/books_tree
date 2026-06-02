@@ -86,7 +86,16 @@ void TreeXml::procesarHasta(const string& palabra, ifstream* archivo){
 
 TreeXml::TreeXml(string folder,string initialNode) : raiz("root"){
 
+        int i=0;
+        int ip=0;
+
         for (const auto& entry : filesystem::directory_iterator(folder)) {
+            i++;
+            if (i>=ip+10){
+                cout << '\r' << "xml procesados: " << i;
+                ip=i;
+            }
+
             ifstream archivo(entry.path());
             if (!archivo.is_open()) return;
 
@@ -231,4 +240,5 @@ TreeXml::TreeXml(string folder,string initialNode) : raiz("root"){
             }
             archivo.close();
         }
+        cout << '\r' << "xml procesados: " << i << endl;
    }
