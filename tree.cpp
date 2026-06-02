@@ -102,6 +102,7 @@ TreeXml::TreeXml(string folder,string initialNode) : raiz("root"){
             //señala cual de los dos filtros de atributos estan siendo ocupados al momento de crear los nodos hijos
             vector<string> filtroactual=book_atributes;
             string word;
+            word.reserve(1024);
             char c;
 
             procesarHasta("<"+initialNode+">",&archivo);
