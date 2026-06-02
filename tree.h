@@ -54,7 +54,7 @@ private:
 public:
     Nodo raiz;
     //los argumentos son el nombre de la carpeta y el nodo por el que se inicia
-    TreeXml(string folder,string initialNode);
+    TreeXml(string folder,string initialNode, size_t limit = 0);
 
     //muestra la jerarquia completa
     void imprimirTodo();

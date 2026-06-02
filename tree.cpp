@@ -5,13 +5,23 @@ void TreeXml::precursores(){
     //accede a los libros
     for(Nodo *libro : raiz.hijos){
         bool es_precursor=true;
+        int publication_year;
         //obtiene año del libro
-        int publication_year = stoi((*libro)["publication_year"].valor.c_str());
+        try{
+            publication_year = stoi((*libro)["publication_year"].valor);
+        }catch(exception e){
+            continue;
+        }
 
         //itera sobre los libros similares
         for(Nodo *sim_libro : (*libro)["similar_books"].hijos){
             //obtiene año del libro similar
-            int sim_publication_year = stoi((*sim_libro)["publication_year"].valor.c_str());
+            int sim_publication_year;
+            try{
+                sim_publication_year = stoi((*sim_libro)["publication_year"].valor);
+            }catch(exception e){
+                continue;
+            }
 
             //compara
             if (sim_publication_year<=publication_year){
@@ -32,7 +42,7 @@ void TreeXml::borrar_ratings(double r){
     auto it = raiz.hijos.begin();
     while (it != raiz.hijos.end()) {
         //obtiene su rating
-        double rating = stof((**it)["average_rating"].valor.c_str());
+        double rating = atof((**it)["average_rating"].valor.c_str());
 
         //elimina si rating es menor o igual
         if (rating <= r){
@@ -84,20 +94,22 @@ void TreeXml::procesarHasta(const string& palabra, ifstream* archivo){
         }
     }
 
-TreeXml::TreeXml(string folder,string initialNode) : raiz("root"){
+TreeXml::TreeXml(string folder,string initialNode, size_t limit) : raiz("root"){
 
         int i=0;
         int ip=0;
 
         for (const auto& entry : filesystem::directory_iterator(folder)) {
+            if (limit>0 && i>=limit) break;
+
+            ifstream archivo(entry.path());
+            if (!archivo.is_open()) return;
+
             i++;
             if (i>=ip+10){
                 cout << '\r' << "xml procesados: " << i;
                 ip=i;
             }
-
-            ifstream archivo(entry.path());
-            if (!archivo.is_open()) return;
 
             //inicializa el arbol en un nodo raiz
             Nodo* currNode = &raiz;
