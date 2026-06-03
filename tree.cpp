@@ -1,5 +1,6 @@
 #include "tree.h"
 
+
 //lista los libros que son mas antiguos a sus libros similares
 void TreeXml::precursores(){
     //accede a los libros
@@ -51,7 +52,7 @@ void TreeXml::borrar_ratings(double r){
             it = raiz.hijos.erase(it);
             //llama destructor
             delete borrar;
-        }else 
+        }else
             ++it;
     }
 
@@ -78,21 +79,38 @@ bool TreeXml::esAtributoValido(const string& tag, const vector<string>& atris) {
         return false;
     }
 
+void TreeXml::listar() {
+    stack<Nodo*> pila;
+    pila.push(&raiz);
+
+    //recorre preorder
+    while (!pila.empty()) {
+        Nodo* nodo = pila.top();
+        pila.pop();
+
+        if (nodo->tag == "id")
+            cout << nodo->valor << endl;
+
+        for (auto hijo : nodo->hijos) {
+            pila.push(hijo);
+        }
+    }
+}
+
 void TreeXml::procesarHasta(const string& palabra, ifstream* archivo){
     string auxw="";
     char c;
+    while(archivo->get(c)){
+        auxw += c;
 
-        while(archivo->get(c)){
-            auxw += c;
-
-            if(auxw.size() > palabra.size()){
-                auxw.erase(0,1);
-            }
-            if(auxw == palabra){
-                break;
-            }
+        if(auxw.size() > palabra.size()){
+            auxw.erase(0,1);
+        }
+        if(auxw == palabra){
+            break;
         }
     }
+}
 
 TreeXml::TreeXml(string folder,string initialNode, size_t limit) : raiz("root"){
 

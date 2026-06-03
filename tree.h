@@ -2,6 +2,7 @@
 #include <fstream>
 #include <filesystem>
 #include <vector>
+#include <stack>
 
 using namespace std;
 
@@ -55,6 +56,9 @@ public:
     Nodo raiz;
     //los argumentos son el nombre de la carpeta y el nodo por el que se inicia
     TreeXml(string folder,string initialNode, size_t limit = 0);
+
+    //muestra las id de los libros en orden preorder
+    void listar();
 
     //muestra la jerarquia completa
     void imprimirTodo();

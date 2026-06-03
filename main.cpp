@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
     if (argc==2) count = stoi(argv[1]);
 
     TreeXml t("books_xml","book",count);
-    
+
     while (true){
 
         int opcion;
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
         switch (opcion)
         {
         case 1: //1 - listar ids
-            //
+            t.listar();
             break;
         case 2: //2 - listar id precursores
             t.precursores();
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
         default:
             break;
         }
-        
+
 
     }
 
