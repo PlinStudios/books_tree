@@ -7,10 +7,18 @@ void TreeXml::precursores(){
     for(Nodo *libro : raiz.hijos){
         bool es_precursor=true;
         int publication_year;
+
         //obtiene año del libro
         try{
             publication_year = stoi((*libro)["publication_year"].valor);
         }catch(exception e){
+            continue;
+        }
+        //esto es en caso de que el libro no tenga similares
+        try{
+            (*libro)["similar_books"];
+        }
+        catch(exception e){
             continue;
         }
 
@@ -30,7 +38,6 @@ void TreeXml::precursores(){
                 break;
             }
         }
-
         //lista los que si son precursores
         if (es_precursor)
             cout << (*libro)["id"].valor << endl;
