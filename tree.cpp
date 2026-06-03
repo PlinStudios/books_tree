@@ -135,6 +135,7 @@ TreeXml::TreeXml(string folder,string initialNode, size_t limit) : raiz("root"){
 
             ifstream archivo(entry.path());
             if (!archivo.is_open()) return;
+            if (entry.path().extension() != ".xml") continue;
 
             i++;
             if (i>=ip+10){
