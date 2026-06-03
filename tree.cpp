@@ -49,8 +49,14 @@ void TreeXml::borrar_ratings(double r){
     //accede a los libros
     auto it = raiz.hijos.begin();
     while (it != raiz.hijos.end()) {
-        //obtiene su rating
-        double rating = atof((**it)["average_rating"].valor.c_str());
+        double rating;
+        //obtiene su rating y lo descarta en caso de que no tenga
+        try{
+            rating = atof((**it)["average_rating"].valor.c_str());
+        }catch(exception e){
+            ++it;
+            continue;
+        }
 
         //elimina si rating es menor o igual
         if (rating <= r){
