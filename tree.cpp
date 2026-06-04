@@ -268,7 +268,6 @@ TreeXml::TreeXml(string folder,string initialNode, size_t limit) : raiz("root"){
                         currNode->agregarHijo(auxN);
 
                         if (word=="similar_books") {filtroactual=similarbooks_atributes;}
-                        //cout <<"se creo "+auxN->tag+" hijo de "+currNode->tag+" en archivo "+entry.path().filename().string()<<endl ;
                         if (!autocierre){
                             currNode=auxN;
                         }
